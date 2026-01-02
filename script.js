@@ -11,6 +11,7 @@ let previousValue ="";
 let operator ="";
 
 const updateDisplay = (value = "0") => {
+    if(!viewer)return;
     viewer.textContent = value;
 
 };
@@ -34,34 +35,87 @@ const calculate =()=>{
     if (operator === "multiply")result = prev * curr;
     if (operator === "divide")result = curr === o ? "Error": prev / curr;
 
-    updateDisplay(result);
+    
     currentValue = String(result);
     previousValue = "";
     operator ="";
+    updateDisplay(currentValue);
 };
 
-buttons.forEach((btn)=> {
-    btn.addEventListener("click",() => { 
-    const num = btn.dataset.num;
-    const ops = btn.dataset.ops;
-
-    if (num){
-        currentValue += num;
-        updateDisplay(currentValue);
+const handleNumber = (value) => {
+    if (value ==="point"){
+        if (!currentValue.includes(".")){
+            currentValue = currentValue || "0";
+            currentValue +=".";
+        }
+    }else {
+        if (currentValue.length<12){
+            currentValue = currentValue === "0"? value: currentValue + value;
+        }
     }
-    if (ops){
-        if (ops === "clear")return clearAll();
-        if (ops === "equalto")return calculate();
+    updateDisplay(currentValue);
+};
 
-        previousValue = currentValue;
-        currentValue="";
-        operator = ops;
+const handleOperator =(value)=> {
+    if (value === "clear") return clearAll();
+    if (value === "equalto")return calculate();
+
+    if (currentValue ==="")return;
+    if(previousValue !=="")calculate();
+
+    operator = value;
+    previousValue = currentValue;
+    currentValue="";
+
+};
+
+buttons.forEach((btn) => {
+    btn.addEventListener("click",() =>{
+        const num = btn.dataset.num;
+        const ops = btn.dataset.ops;
+
+        if (num)handleNumber(num);
+        if (ops)handleOperator(ops);
+        
+    });
+ });
+
+ document.addEventListener("keydown",(e) => {
+    const key = e.key;
+
+    if (key>="0" && key <="9"){
+        handleNumber(key);
+        return;
+    }
+
+    if ( key === "." || key ==="."){
+        handleNumber("point");
+        return;
+    }
     
-    }
 
+ const operatorKeys = {
+    "+":"plus",
+    "-":"minus",
+    "*":"multiply",
+    "X":"multiply",
+    "/":"divide",
+ };
+
+ if (operatorKeys(key)) {
+    handleOperator(operatorKeys(key));
+    return;
+ }
+
+if (key === "Enter" || key === "=") {
+    handleOperator("equalto");
+    return;
+ }
+
+ if (key==="Backspace" || key === "Escape") {
+    e.preventDefault();
+    handleOperator("clear");
+ }
 });
-});
-
-
-updateDisplay("0");
+updateDisplay();
 });
