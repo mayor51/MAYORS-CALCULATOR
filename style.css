@@ -1,0 +1,62 @@
+html {
+    background: #100a1c;
+    background-image: radial-gradient(50% 30% ellipse at center top, #201e40 0%, rgba(0, 0, 0,0)100%), radial-gradient(60% 50% ellipse at center bottom, #261226 0%, #100a1c 100%);
+    background-attachment:fixed ;
+    color: #6cacc5;
+}
+
+body{
+    color: #6cacc5;
+    font: 300 18px/1.6 "source sans pro",sans-serif;
+    margin: 0%;
+    padding: 2em 0 2em;
+    text-align: center;
+}
+
+button{
+    width: 70px;
+    height: 60px;
+    font-size: 30px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: skyblue;
+    color: teal;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #ddd;
+    transform: scale(1.1);
+}
+
+button.ops{
+    background-color: teal;
+    color: lightgreen;
+    font-weight: bold;
+}
+
+button.{
+    background-color: #ff7070;
+    color: red;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.viewer{
+    margin-left:50px;
+    display: flex;
+    font-size: 40px;
+    color:white;
+
+}
